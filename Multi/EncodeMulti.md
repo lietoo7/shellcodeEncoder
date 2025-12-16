@@ -1,4 +1,4 @@
-# Outil d'Obscurcissement de Shellcode Multi-Couches
+# Outil d'Obscurcissement de Shellcode Multi-Couches V0
 
 Cet outil en C démontre une technique d'obscurcissement courante utilisée en sécurité et en anti-malware. 
 Il prend un *shellcode* binaire et applique une séquence de quatre encodages différents pour le rendre non reconnaissable par les scanners de signatures statiques.
