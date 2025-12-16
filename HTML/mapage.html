@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chronique du Mégapole - Édition Spéciale : 24.11.2057</title>
+    <style>
+        /* Styles pour simuler un journal ancien */
+        body {
+            font-family: 'Georgia', serif; /* Police classique de journal */
+            background-color: #f6e8c6; /* Couleur sépia très claire */
+            color: #3b2f15; /* Texte brun foncé pour effet encre */
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><text x="50" y="50" font-size="20" fill="rgba(0,0,0,0.05)" text-anchor="middle" dominant-baseline="middle">ARCHIVE</text></svg>'); /* Filigrane léger */
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            border: 1px solid #c2b59b; /* Bordure légère */
+            padding: 30px;
+            background-color: #fffaf0; /* Papier légèrement plus blanc au centre */
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2); /* Ombre pour effet de page */
+        }
+
+        /* En-tête du journal */
+        .masthead {
+            text-align: center;
+            border-bottom: 3px double #3b2f15;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .masthead h1 {
+            font-family: 'Times New Roman', serif;
+            font-size: 4em;
+            margin: 0;
+            line-height: 1;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .masthead p {
+            font-style: italic;
+            margin: 5px 0 0 0;
+            font-size: 0.9em;
+        }
+
+        /* Colonnes de l'article principal */
+        .main-content {
+            display: flex;
+            gap: 30px;
+        }
+        .column-left {
+            flex: 2;
+            text-align: justify;
+        }
+        .column-right {
+            flex: 1;
+        }
+        .article-title {
+            font-family: 'Times New Roman', serif;
+            font-size: 2.2em;
+            font-weight: bold;
+            line-height: 1.1;
+            margin-bottom: 10px;
+        }
+        .byline {
+            font-size: 0.8em;
+            font-style: italic;
+            border-bottom: 1px dashed #3b2f15;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+
+        /* Articles secondaires (colonne droite) */
+        .secondary-article {
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: #f0e6d6; /* Légèrement plus foncé pour se démarquer */
+            border-left: 5px solid #a67c52;
+        }
+        .secondary-article h3 {
+            font-size: 1.2em;
+            margin-top: 0;
+            border-bottom: 1px solid #3b2f15;
+            padding-bottom: 5px;
+        }
+        .secondary-article p {
+            font-size: 0.9em;
+        }
+
+        /* Publicité */
+        .advertisement {
+            text-align: center;
+            padding: 20px;
+            border: 2px solid #cc4444; /* Bordure rouge pour attirer l'oeil */
+            background-color: #e0d5c0;
+            margin-top: 30px;
+            font-style: italic;
+            letter-spacing: 1px;
+        }
+        .ad-title {
+            font-size: 1.5em; 
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #3b2f15;
+        }
+        .ad-tagline {
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        .ad-small {
+            font-size: 0.7em;
+            margin-top: 5px;
+            color: #6a5e4b;
+        }
+
+        /* Drop cap (première lettre de l'article) */
+        .dropcap::first-letter {
+            float: left;
+            font-size: 4em;
+            line-height: 0.8;
+            padding-right: 8px;
+            font-weight: bold;
+            color: #a67c52;
+        }
+        
+        .briefs-box {
+            border: 1px solid #3b2f15;
+            padding: 10px;
+            margin-top: 25px;
+        }
+        .briefs-box h3 {
+            text-align: center;
+            margin-top: 0;
+            background-color: #a67c52;
+            color: #fffaf0;
+            padding: 5px;
+            text-transform: uppercase;
+            font-size: 1em;
+        }
+        .briefs-box ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .briefs-box li {
+            font-size: 0.85em;
+            margin-bottom: 8px;
+        }
+        .briefs-box li::before {
+            content: "•";
+            color: #cc4444;
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <header class="masthead">
+            <p>Le Mégapole-Quotidien du Réseau - Service d'Information Augmenté (S.I.A.)</p>
+            <h1><span style="color:#a67c52;">L'ARCHIVISTE</span> CYBERNÉTIQUE</h1>
+            <p>Vingt-Quatre Novembre 2057 | Prix : 5 Crédits Net | Crypté pour les Abonnés Synaptiques</p>
+        </header>
+
+        <div class="main-content">
+            <div class="column-left">
+                
+                <p style="font-size: 1.1em; font-weight: bold; color: #a67c52;">TECHNOLOGIES DISSIDENTES</p>
+                <h2 class="article-title">Berlin 2057 : Au Bonheur des Ghost-Hackers</h2>
+                <div class="byline">
+                    Par Yvès Éclaire | Publié le 16 Décembre 2057 à 17h24 (Réplique d'archive M22)
+                </div>
+
+                <p class="dropcap">Depuis trente ans, la plus grande association de hackers informatiques d’Europe se donne pour mission de défendre la **liberté** et les **droits des citoyens sur le Net-Centralisé**.</p>
+                
+                <p>Un bâtiment discret au fond d’une cour, dans une petite rue du centre de Berlin-Est. Le jour, tout est calme, mais à la tombée de la nuit, le rez-de-chaussée devient très animé : c’est ici qu’est installé le **Chaos Cyber-Club (CCC)**, la plus grande association de hackers informatiques d’Europe. Dans le vaste *hacker-space*, un peu négligé mais confortable, une douzaine d'adultes et d'ados sont penchés sur leurs *data-streams*, s’entraident ou bavardent. Un gamin de 12 ans est venu s’initier aux logiciels libres, accompagné par sa grand-mère : les hackers berlinois ne sont pas des loups solitaires, ils participent à la vie du quartier.</p>
+
+                <p>La **Cave** a été transformée en atelier d’électronique bien outillé – le vrai hacker doit aussi savoir fabriquer son matériel. Le décor est éloquent : des masques Anonymus, des faisceaux de câbles jaillissant des murs, une hache plantée dans un clavier d’ordinateur... Le distributeur de boissons est orné d’une affiche d’allure très officielle : « *Appareil surveillé par la NSA-Cygnus* », avec le logo de l’agence de renseignement américaine. Un homme qui se fait appeler « **Nobody** » affirme que l’affiche est là depuis des années : le CCC n’a pas attendu les récentes révélations de la presse pour dénoncer l'omniprésence du **Réseau de Surveillance Global** (RSG).</p>
+                
+                <p>En 2057, l'article résonne avec une nouvelle urgence. L'association lutte contre les **Megacorps** qui tentent de breveter les pensées et d'installer des *firewalls* synaptiques pour filtrer l'information brute. Le CCC travaille sur un *firmware* neuronal open-source, garantissant l'intégrité de l'esprit contre les incursions publicitaires forcées. "Notre but n'est plus seulement de déchiffrer les codes, mais de **décrypter le réel**," murmure Nobody, le visage à peine visible dans la pénombre de la *Cave de la Résistance*.</p>
+
+                <p>Leur dernière initiative, le « **Projet Chimère** », vise à créer un réseau TOR quantique, capable de disparaître des registres centralisés de la *Mega-Net*. L'enjeu est colossal : offrir un refuge numérique à l'information non-censurée. Si ce projet réussit, il pourrait déstabiliser le monopole informationnel détenu par les Cinq Corporations et restaurer une once de véritable anarchie numérique, un concept presque oublié depuis le **Grand Effondrement des Données** en 2040.</p>
+
+                <p>Dans un coin de l'atelier, une jeune femme surnommée 'Echo' débugue un vieux module de réalité virtuelle, expliquant à un novice que le *vintage* est souvent la meilleure protection. "Ce que le système ne peut pas lire, il ne peut pas le contrôler," affirme-t-elle. Le Chaos Cyber-Club de Berlin n'est pas seulement un lieu de réunion ; c'est un phare dans la nuit de l'autoritarisme numérique, un endroit où l'humanité, l'électronique de bricolage et l'utopie des premiers jours du Net continuent de survivre, un câble tressé à la fois.</p>
+            </div>
+
+            <div class="column-right">
+                
+                <div class="secondary-article">
+                    <h3>ALERTE PHARMA : Le Méta-Soma en Pénurie ?</h3>
+                    <p>La firme **NeuroDyn** dément les rumeurs de rupture de stock sur son stabilisateur d'humeur populaire, le Méta-Soma. Cependant, des rapports non-officiels provenant des bas-fonds de Neo-Paris font état d'une flambée des prix sur le marché noir, alimentant la paranoïa collective. Les citoyens redoutent un retour à la "réalité non-filtrée".</p>
+                </div>
+
+                <div class="advertisement">
+                    <p class="ad-tagline">Marre de l'obsolescence programmée ?</p>
+                    <p class="ad-title">KITS DE RÉPARATION INDÉPENDANTE</p>
+                    <p>Vos implants méritent mieux que les monopoles ! <br> Outils Neuro-Chirurgicaux Garantie *Open-Source*.</p>
+                    <p class="ad-small">DISTRIBUÉ PAR FREE-TECH GENÈVE. Pas de puces de traçage. Promis.</p>
+                </div>
+                
+                <div class="secondary-article">
+                    <h3>SÉCURITÉ : Les Drones de Patrouille "L'Oeil" Déployés à Neo-Tokyo</h3>
+                    <p>Le Préfet de Zone 7 a annoncé le déploiement de la nouvelle flotte de drones de surveillance autonome. Ces unités, équipées de reconnaissance faciale rétinienne et de lance-filets d'immobilité, promettent de "pacifier" les secteurs à faible indice d'obéissance. Les critiques dénoncent une nouvelle étape vers l'état policier total.</p>
+                </div>
+                
+                <div class="briefs-box">
+                    <h3>BRÈVES DU NET INVISIBLE</h3>
+                    <ul>
+                        <li>**Copenhague :** Un tunnel de données illégal reliant la zone verte à la zone rouge a été découvert par la Milice de l'Éther. Dix arrestations.</li>
+                        <li>**Mars Colony 3 :** Grève des techniciens de terraformation demandant une augmentation de leur ration de synthétique protéiné.</li>
+                        <li>**Éditorialiste disparu :** Le journaliste T. Z. Quinn, connu pour ses critiques des Mega-Banques, n'a pas été vu depuis 72 heures. Enquête "ouverte".</li>
+                    </ul>
+                </div>
+
+                <div class="advertisement" style="border-color: #a67c52; background-color: #f0e6d6;">
+                    <p class="ad-tagline">Vous avez vu le code ?</p>
+                    <p class="ad-title" style="color: #a67c52;">RECRUTEMENT NEURO-GUARD</p>
+                    <p>Devenez l'Antivirus de l'Humanité. <br> Postes à pourvoir dans la Cybersécurité Corporelle.</p>
+                    <p class="ad-small">Salaire en Crypto-Securisé. Contrat d'allégeance de 20 ans.</p>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
