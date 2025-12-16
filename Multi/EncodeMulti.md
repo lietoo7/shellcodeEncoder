@@ -9,7 +9,7 @@ Le but de ce script est de transformer un *shellcode* brut en une chaîne
 de caractères encodée qui peut être intégrée sans danger dans un programme hôte (un *loader* ou un *dropper*). 
 L'encodage appliqué est une séquence de chiffrement et de transformations binaires-texte.
 
-## ⚙️ Compilation
+## Compilation
 
 Ce programme utilise la librairie **OpenSSL** pour l'encodage Base64, en particulier la suite d'outils **libcrypto**.
 
