@@ -56,6 +56,4 @@ Il est crucial de noter que le chiffrement XOR est une forme d'**obfuscation** t
   * **Vulnérabilité :** Si la clé est courte et répétée (comme ici), elle est extrêmement vulnérable à la **cryptanalyse par recherche d'occurrence** (*frequency analysis*), car l'attaquant peut déduire la clé en analysant les répétitions dans le texte chiffré (une technique courante en rétro-ingénierie de *malware*).
   * **Contexte :** Cette technique est principalement utilisée dans des scénarios où l'objectif est de contourner les outils de détection de signatures statiques, non pas de protéger des données sensibles contre une attaque cryptanalytique dédiée.
 
------
-
-Souhaitez-vous ajouter ou modifier une section de ce `README` avant de le finaliser ?
+ 
