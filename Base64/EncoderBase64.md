@@ -3,15 +3,15 @@
 2.  Comment le compiler et l'exécuter.
 3.  Une brève explication du fonctionnement de l'encodage Base64 dans ce contexte.
 
-## 📝 README: Encodeur Base64 de Shellcode en C
+## README: Encodeur Base64 de Shellcode en C
 
-### 🚀 1. Aperçu du Projet
+### 1. Aperçu du Projet
 
 Ce projet implémente une fonction simple et auto-contenue en langage **C** pour effectuer l'encodage **Base64** de données binaires arbitraires, spécifiquement un "shellcode".
 
 L'objectif principal est de démontrer comment un shellcode (qui contient souvent des octets nuls `\x00`) peut être transformé en une chaîne de caractères ASCII imprimables, ce qui le rend plus facile à manipuler ou à transmettre dans des environnements qui n'aiment pas les octets nuls (comme certaines chaînes de bases de données ou les arguments de ligne de commande).
 
-### ⚙️ 2. Compilation et Exécution
+### 2. Compilation et Exécution
 
 #### 2.1 Prérequis
 
@@ -44,7 +44,7 @@ Shellcode encodé en Base64 : M8BIu9Ga6EZMDAA1Vn9SV1lBUA8F
 
 -----
 
-### 💡 3. Fonctionnement de l'Encodage Base64
+### 3. Fonctionnement de l'Encodage Base64
 
 L'encodage Base64 est un schéma qui convertit des données binaires en une séquence de caractères ASCII.
 
@@ -80,10 +80,8 @@ Si la longueur des données binaires n'est pas un multiple de 3, le caractère d
 
 -----
 
-### ⚠️ 4. Avertissement
+### 4. Avertissement
 
 Ce code est fourni à des fins **éducatives et de démonstration** uniquement (sécurité offensive, étude de l'encodage binaire, etc.). Veuillez l'utiliser de manière responsable et uniquement sur des systèmes où vous avez l'autorisation explicite d'effectuer des tests.
 
------
-
-Voulez-vous ajouter une section spécifique, comme des instructions détaillées sur la façon d'intégrer cette fonction dans un projet plus vaste ?
+ 
