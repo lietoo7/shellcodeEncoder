@@ -7,9 +7,17 @@ import string
 
 # --- Configuration ---
 OUTPUT_FILE = "jesuiscacher.html"
-# Détermine la fréquence d'injection (e.g., insérer un caractère tous les N caractères de l'hôte)
-# Un nombre plus grand augmente la discrétion.
-INJECTION_RATE = 200
+# Le taux est basé sur les caractères HÔTES parcourus entre chaque tentative d'injection.
+INJECTION_RATE = 50
+
+# LISTE DES BALISES DE FIN SÛRES : L'injection aura lieu APRES ces séquences.
+# Cela garantit que le code est placé entre des blocs HTML structurels.
+SAFE_CLOSING_TAGS = [
+    '</div>', '</p>', '</li>', '</span>', '</form>', '</header>', 
+    '</footer>', '</section>', '</body>', '</html>', '</table>', 
+    '</pre>', '</article>',
+]
+
 
 # ----------------------------------------------------
 # 3.1.2 Fonction creer_fauxcommentaire(caractere) (BF006)
@@ -22,7 +30,7 @@ def creer_fauxcommentaire(caractere: str) -> str:
     # Génère une chaîne aléatoire courte pour le padding dans le commentaire
     padding = ''.join(random.choices(string.ascii_letters + string.digits, k=random.randint(5, 15)))
     
-    # Structure du commentaire : # La clé 'stg_c' permet au décodeur d'identifier ce type de payload.
+    # Structure du commentaire : La clé 'stg_c' permet au décodeur d'identifier ce type de payload.
     comment = f""
     return comment
 
@@ -32,10 +40,8 @@ def creer_fauxcommentaire(caractere: str) -> str:
 def creer_faussevariable(caractere: str) -> str:
     """
     Encapsule un caractère du payload dans une fausse variable JavaScript ou CSS.
-    L'alternance entre JS et CSS et l'aléatoire augmentent la discrétion.
     """
     injection_type = random.choice(['js', 'css'])
-    # Génère un ID aléatoire unique pour le nom de la variable
     random_id = ''.join(random.choices(string.ascii_letters, k=5)) + str(random.randint(100, 999))
 
     if injection_type == 'js':
@@ -43,20 +49,19 @@ def creer_faussevariable(caractere: str) -> str:
         return f"<script>var _{random_id} = '{caractere}';</script>"
     else: # CSS
         # Ex: <style> :root {{--c5H9j: 'S';}} </style>
-        # Note: L'utilisation de :root garantit que la variable est globale mais non utilisée.
         return f"<style> :root {{--{random_id}: '{caractere}';}} </style>"
 
 # ----------------------------------------------------
-# 3.1.1 Script Principal (Encoder.py)
+# 3.1.1 Script Principal (Encoder.py) - LOGIQUE D'INJECTION FINALE
 # ----------------------------------------------------
 def encode_html_steganography(input_html_path: str, payload_str: str):
     """
     Fonction principale pour encoder le payload dans le fichier HTML hôte.
-    (BF001, BF003, BF004, BF005)
+    Cible l'injection après les balises de fin structurelles.
     """
     print(f"Debut de l'encodage de '{payload_str}'...")
 
-    # 1. Encodage du Payload (BF002)
+    # 1. Encodage du Payload
     try:
         encoded_payload = base64.b64encode(payload_str.encode('utf-8')).decode('utf-8')
         print(f"Payload encode en Base64 : {encoded_payload} ({len(encoded_payload)} caracteres)")
@@ -72,61 +77,82 @@ def encode_html_steganography(input_html_path: str, payload_str: str):
         print(f"Fichier source non trouve : {input_html_path}")
         return
     
-    # Vérification simple pour s'assurer que le contenu est suffisant
     if len(html_content) < len(encoded_payload) * INJECTION_RATE * 0.5:
-         print(f"Avertissement : Le fichier hote pourrait etre trop court ({len(html_content)} octets) pour inserer discretement le payload.")
+        print(f"Avertissement : Le fichier hote pourrait etre trop court ({len(html_content)} octets) pour inserer discretement le payload.")
 
 
-    # 3. Iteration et Placement (BF004, BF005)
-    
+    # 3. Iteration et Placement (Amélioré)
     output_content = ""
     payload_index = 0
     host_index = 0
+    injection_counter = 0 # Compteur pour respecter le taux d'injection
     
-    # Selectionne aleatoirement les types d'injection pour alterner (BF005)
     injection_functions = [creer_fauxcommentaire, creer_faussevariable]
     random.shuffle(injection_functions)
     
     # Iteration sur le contenu du fichier HTML
     while host_index < len(html_content):
-        # On ajoute le caractere hote actuel au fichier de sortie
-        output_content += html_content[host_index]
+        current_char = html_content[host_index]
+        
+        # 1. On ajoute le caractere hote actuel au fichier de sortie
+        output_content += current_char
+        host_index += 1
+        injection_counter += 1
         
         # Condition d'injection : si nous avons encore des caracteres a cacher
         if payload_index < len(encoded_payload):
             
-            # Condition de frequence : inserer tous les INJECTION_RATE caracteres
-            if host_index > 0 and host_index % INJECTION_RATE == 0:
+            # Condition de frequence : on vérifie la fréquence avant de chercher un point sûr
+            if injection_counter >= INJECTION_RATE:
                 
-                # Recupere le prochain caractere a cacher
-                char_to_hide = encoded_payload[payload_index]
-                
-                # Choix et execution de la fonction d'injection (BF006 ou BF007)
-                injection_func = injection_functions[payload_index % len(injection_functions)]
-                
-                injected_code = injection_func(char_to_hide)
-                
-                # Injection dans le contenu de sortie
-                output_content += injected_code
-                
-                print(f"   -> Injecte '{char_to_hide}' (Type: {injection_func.__name__}, Index Hote: {host_index})")
-                
-                payload_index += 1
-        
-        host_index += 1
+                # Condition de securite : Verifier si nous venons de terminer l'écriture d'une balise de fin sûre
+                injected = False
+                for tag in SAFE_CLOSING_TAGS:
+                    if output_content.endswith(tag):
+                        
+                        # Point de repère sûr trouvé. Injection
+                        injection_counter = 0 # Reset du compteur de fréquence
+                        
+                        char_to_hide = encoded_payload[payload_index]
+                        injection_func = injection_functions[payload_index % len(injection_functions)]
+                        injected_code = injection_func(char_to_hide)
+                        
+                        # Injection dans le contenu de sortie, immédiatement APRES la balise de fin
+                        output_content += injected_code
+                        
+                        print(f"    -> Injecte '{char_to_hide}' (Type: {injection_func.__name__}, Index Hote: {host_index-1}) APRES balise de fin '{tag}'")
+                        
+                        payload_index += 1
+                        injected = True
+                        break # Sortir de la boucle des tags pour continuer le traitement hôte
 
-    # Verification si tout le payload a ete insere
+                if injected:
+                    continue # Passe à l'itération suivante de la boucle while
+        
+        # Ce bloc de code ne s'exécutera que si le payload est plus long que le contenu HTML.
+        # Il est conservé pour s'assurer que tout le payload est écrit, même si ce n'est pas "discret".
+        elif payload_index < len(encoded_payload) and host_index == len(html_content):
+             print(f"Avertissement : Fin de fichier atteint. Ajout du reste du payload ({len(encoded_payload) - payload_index} caractères) à la toute fin.")
+             while payload_index < len(encoded_payload):
+                 char_to_hide = encoded_payload[payload_index]
+                 injection_func = injection_functions[payload_index % len(injection_functions)]
+                 output_content += injection_func(char_to_hide)
+                 payload_index += 1
+                 
+             break 
+
+    # 4. Finalisation
     if payload_index < len(encoded_payload):
-        print(f"Erreur : Seulement {payload_index}/{len(encoded_payload)} caracteres inseres. Le fichier hote etait trop court ou le taux d'injection est trop eleve.")
+        print(f"Erreur : Seulement {payload_index}/{len(encoded_payload)} caracteres inseres. Le fichier hôte était trop court pour insérer discrètement tout le payload.")
     else:
         print("Tous les caracteres du payload ont ete inseres avec succes.")
 
-    # 4. Ecriture du Fichier de Sortie (BF003)
+    # 5. Ecriture du Fichier de Sortie
     try:
         with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
             f.write(output_content)
         print(f"Fichier steganographie cree : {OUTPUT_FILE}")
-        print(f"Verifiez l'integrite visuelle (UC005) : {input_html_path} vs {OUTPUT_FILE}")
+        print(f"Verification de l'integrite visuelle (UC005) : L'affichage devrait désormais être préservé.")
     except Exception as e:
         print(f"Erreur lors de l'ecriture du fichier de sortie : {e}")
 
@@ -134,10 +160,9 @@ def encode_html_steganography(input_html_path: str, payload_str: str):
 # Interface Utilisateur (Ligne de Commande) (3.3)
 # ----------------------------------------------------
 if __name__ == "__main__":
-    # Utilisation du module argparse pour une meilleure interface CLI (3.3)
     parser = argparse.ArgumentParser(
         description="Outil de Steganographie HTML. Encode une chaine de caracteres dans un fichier HTML hote.",
-        epilog="Exemple: python Encoder.py mapage.html 'Mon message secret'"
+        epilog="Exemple: python encoder.py mapage.html 'Mon message secret'"
     )
     parser.add_argument(
         "html_source",
